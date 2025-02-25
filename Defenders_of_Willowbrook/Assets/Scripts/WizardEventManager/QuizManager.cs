@@ -11,7 +11,7 @@ public class QuizManager : MonoBehaviour
     [Header("Quiz Elements")]
     public GameObject wizardPanel;
     public TextMeshProUGUI questionText;
-    public List<Button> answerButtons;
+    public List<Button> answerButtons; 
     private int correctAnswerIndex = 0;
 
     private ILevelManager currentLevelManager;
