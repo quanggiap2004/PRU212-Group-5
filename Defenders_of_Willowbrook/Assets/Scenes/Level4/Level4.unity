@@ -3832,7 +3832,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 823, y: -14}
+  m_AnchoredPosition: {x: 350.5, y: 18}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &603336240
@@ -4050,7 +4050,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 498.19}
+  m_AnchoredPosition: {x: 21, y: 178}
   m_SizeDelta: {x: 478.88, y: 151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &620868823
@@ -6424,7 +6424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -167, y: 498.19}
+  m_AnchoredPosition: {x: -146, y: 178.00003}
   m_SizeDelta: {x: 64.47, y: 53.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1664053115
@@ -6541,7 +6541,8 @@ MonoBehaviour:
   - {fileID: 430120730}
   - {fileID: 794939238}
   - {fileID: 1623862998}
-  moneyText: {fileID: 0}
+  moneyText: {fileID: 149435206}
+  towerShop: {fileID: 1751077583}
 --- !u!114 &1671334002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6573,13 +6574,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca22c7485a35b864ea61b313931f7434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionPanel: {fileID: 1808853051}
+  wizardPanel: {fileID: 1808853051}
   questionText: {fileID: 1641478013}
   answerButtons:
-  - {fileID: 1231575155}
-  - {fileID: 821323104}
-  - {fileID: 384944605}
-  - {fileID: 1148407543}
+  - {fileID: 1922806503}
+  - {fileID: 1364196503}
+  - {fileID: 1070633738}
+  - {fileID: 1446444440}
+  OnQuizComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1720100611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6937,7 +6941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.7355042, y: -444}
+  m_AnchoredPosition: {x: 3.7355042, y: 0}
   m_SizeDelta: {x: -7.4711, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1808853053

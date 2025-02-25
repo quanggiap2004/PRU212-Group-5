@@ -11,7 +11,7 @@ public class QuizManager : MonoBehaviour
     [Header("Quiz Elements")]
     public GameObject wizardPanel;
     public TextMeshProUGUI questionText;
-    public List<Button> answerButtons; // Thêm các nút trong Inspector
+    public List<Button> answerButtons;
     private int correctAnswerIndex = 0;
 
     private ILevelManager currentLevelManager;
@@ -30,24 +30,47 @@ public class QuizManager : MonoBehaviour
     public void StartQuiz(ILevelManager levelManager)
     {
         currentLevelManager = levelManager;
+        Debug.Log("Starting Quiz...");
+
         ShowQuestion();
     }
 
     private void ShowQuestion()
     {
+        Debug.Log("Displaying Question UI...");
         currentLevelManager.PauseGame(true);
         wizardPanel.SetActive(true);
 
         questionText.text = "What weakens fire enemies?";
+        Debug.Log("Question set: " + questionText.text);
         string[] answers = { "Water", "Wind", "Earth", "Fire" };
         correctAnswerIndex = 0; // ?áp án ?úng là Water
 
         for (int i = 0; i < answerButtons.Count; i++)
         {
-            int index = i;
-            answerButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = answers[i];
-            answerButtons[i].onClick.RemoveAllListeners();
-            answerButtons[i].onClick.AddListener(() => CheckAnswer(index));
+            if (answerButtons[i] != null)
+            {
+                int index = i;
+                var buttonText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+
+                if (buttonText != null)
+                {
+                    buttonText.text = answers[i];
+                    Debug.Log($"Button {i} assigned with text: {answers[i]}");
+                }
+                else
+                {
+                    Debug.LogError($"Button {i} is missing a TextMeshProUGUI component!");
+                }
+
+                answerButtons[i].onClick.RemoveAllListeners();
+                answerButtons[i].onClick.AddListener(() => CheckAnswer(index));
+                Debug.Log($"Listener added for button {i}");
+            }
+            else
+            {
+                Debug.LogError($"Answer button at index {i} is not assigned in the Inspector!");
+            }
         }
     }
 
