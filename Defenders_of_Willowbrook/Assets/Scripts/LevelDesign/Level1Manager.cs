@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Level1Manager : MonoBehaviour
+public class Level1Manager : MonoBehaviour, ILevelManager
 {
     public static Level1Manager main;
     public Transform spawnPoint;
+    public Transform SpawnPoint => spawnPoint;
     public Transform[] path;
-    public int CurrentMoney;
+    public Transform[] Path => path;
+    public int CurrentMoney { get; private set; }
+    private int playerMoney = 0;
+    public bool isAnyUIOpen { get; private set; } = false;
     [SerializeField] public TextMeshProUGUI moneyText;
     private void Awake()
     {
@@ -23,8 +27,8 @@ public class Level1Manager : MonoBehaviour
 
     public void IncreaseMoney(int amount)
     {
-        CurrentMoney += amount;
-        UpdateMoneyUI();
+        playerMoney += amount;
+        Debug.Log("Money: " + playerMoney);
     }
 
     public bool SpendMoney(int amount)
@@ -47,5 +51,14 @@ public class Level1Manager : MonoBehaviour
     {
         if (moneyText != null)
             moneyText.text = CurrentMoney.ToString();
+    }
+    public void SetUIState(bool state)
+    {
+        isAnyUIOpen = state;
+        Time.timeScale = state ? 0f : 1f; // D?ng game khi UI m?
+    }
+    public void PauseGame(bool isPaused)
+    {
+        Time.timeScale = isPaused ? 0f : 1f;
     }
 }

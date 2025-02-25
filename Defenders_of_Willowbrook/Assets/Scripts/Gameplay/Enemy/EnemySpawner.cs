@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    private ILevelManager levelManager;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
@@ -30,7 +31,23 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(StartWave());
+        var managers = FindObjectsOfType<MonoBehaviour>();
+        foreach (var manager in managers)
+        {
+            if (manager is ILevelManager)
+            {
+                levelManager = (ILevelManager)manager;
+                break;
+            }
+        }
+
+        if (levelManager == null)
+        {
+            Debug.LogError("No Level Manager found!");
+        }
+
+        // Ch? quiz hoàn t?t tr??c khi b?t ??u spawn
+        QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
     }
 
     private void Update()
@@ -74,7 +91,10 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnEnemy()
     {
         GameObject prefabToSpawn = enemyPrefabs[0];
-        Instantiate(prefabToSpawn, Level1Manager.main.spawnPoint.position, Quaternion.identity);
+        if (levelManager != null)
+        {
+            Instantiate(enemyPrefabs[0], levelManager.SpawnPoint.position, Quaternion.identity);
+        }
     }
 
     private int EnemiesPerWave()

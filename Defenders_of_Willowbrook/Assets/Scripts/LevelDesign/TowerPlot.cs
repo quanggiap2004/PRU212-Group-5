@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,9 +10,29 @@ public class TowerPlot : MonoBehaviour
 
     private GameObject tower;
     private Color startColor;
+    private ILevelManager levelManager;
 
     private void Start()
     {
+        var managers = FindObjectsOfType<MonoBehaviour>(); // Tìm tất cả MonoBehaviour
+        foreach (var manager in managers)
+        {
+            if (manager is ILevelManager)
+            {
+                levelManager = (ILevelManager)manager;
+                break; // Lấy cái đầu tiên tìm thấy
+            }
+        }
+
+        if (levelManager == null)
+        {
+            Debug.LogError("No Level Manager found!");
+        }
+        else
+        {
+            //Debug.Log("Level Manager found: " + levelManager.GetType().Name);
+        }
+
         startColor = sr.color;
     }
 
@@ -31,14 +51,14 @@ public class TowerPlot : MonoBehaviour
         if (tower != null) return;
 
         Tower towerTobuild = BuildManager.main.GetSelectedTower();
-        if (towerTobuild.cost > Level1Manager.main.CurrentMoney)
+        if (towerTobuild.cost > levelManager.CurrentMoney)
         {
             Debug.Log("Not enough money");
             return;
         }
-        Level1Manager.main.SpendMoney(towerTobuild.cost);
+        levelManager.SpendMoney(towerTobuild.cost);
 
-        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); // Adjust the Y offset as needed
+        Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         tower = Instantiate(towerTobuild.prefab, spawnPosition, Quaternion.identity);
     }
 }
