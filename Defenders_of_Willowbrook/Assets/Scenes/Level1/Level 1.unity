@@ -8586,7 +8586,6 @@ MonoBehaviour:
   - {fileID: 806339310}
   - {fileID: 760780437}
   - {fileID: 2037894509}
-  CurrentMoney: 0
   moneyText: {fileID: 660285597}
 --- !u!4 &1933895675
 Transform:

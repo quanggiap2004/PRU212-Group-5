@@ -45,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Debug.LogError("No Level Manager found!");
         }
-
+        StartCoroutine(StartWave());
         // Ch? quiz hoàn t?t tr??c khi b?t ??u spawn
         //QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
     }
