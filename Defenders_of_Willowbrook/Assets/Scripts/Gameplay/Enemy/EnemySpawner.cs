@@ -47,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         // Ch? quiz hoàn t?t tr??c khi b?t ??u spawn
-        QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
+        //QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
     }
 
     private void Update()
