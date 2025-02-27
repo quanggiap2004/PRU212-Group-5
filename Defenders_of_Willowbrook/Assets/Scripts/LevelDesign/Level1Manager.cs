@@ -13,7 +13,16 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     public int CurrentMoney { get; private set; }
     private int playerMoney = 0;
     public bool isAnyUIOpen { get; private set; } = false;
+
     [SerializeField] public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI MoneyText => moneyText;
+
+    [Header("Player Health")]
+    [SerializeField] private int playerHealth = 10;
+    public int PlayerHealth => playerHealth;
+    [SerializeField] private TextMeshProUGUI healthText;
+    public TextMeshProUGUI HealthText => healthText;
+
     private void Awake()
     {
         main = this;
@@ -23,6 +32,7 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     {
         CurrentMoney = 100;
         moneyText.text = CurrentMoney.ToString();
+        healthText.text = playerHealth.ToString();
     }
 
     public void IncreaseMoney(int amount)
@@ -60,5 +70,23 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     public void PauseGame(bool isPaused)
     {
         Time.timeScale = isPaused ? 0f : 1f;
+    }
+
+    public void DecreaseHealth(int amount)
+    {
+        playerHealth -= amount;
+        if (playerHealth <= 0)
+        {
+            playerHealth = 0;
+            // Handle game over logic here
+            Debug.Log("Game Over!");
+        }
+        UpdateHealthUI();
+    }
+
+    public void UpdateHealthUI()
+    {
+        if (healthText != null)
+            healthText.text = playerHealth.ToString();
     }
 }

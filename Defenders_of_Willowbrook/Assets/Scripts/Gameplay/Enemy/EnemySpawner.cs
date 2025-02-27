@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -14,6 +17,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float enemiesPerSecond = 0.5f;
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
+
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI waveText;
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
@@ -45,6 +51,7 @@ public class EnemySpawner : MonoBehaviour
         {
             Debug.LogError("No Level Manager found!");
         }
+        UpdateWaveUI();
         StartCoroutine(StartWave());
         // Ch? quiz hoàn t?t tr??c khi b?t ??u spawn
         //QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
@@ -60,6 +67,11 @@ public class EnemySpawner : MonoBehaviour
             enemiesLeftToSpawn--;
             enemiesAlive++;
             timeSinceLastSpawn = 0f;
+        }
+
+        if (levelManager.PlayerHealth == 0)
+        {
+            RedirectToScene(1);
         }
 
         if (enemiesLeftToSpawn == 0 && enemiesAlive == 0)
@@ -80,11 +92,22 @@ public class EnemySpawner : MonoBehaviour
         enemiesLeftToSpawn = EnemiesPerWave();
     }
 
+    private void RedirectToScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
     private void EndWave()
     {
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
+        
+        if (currentWave > 3)
+        {
+            RedirectToScene(0);
+            return;
+        }
+        UpdateWaveUI();
         StartCoroutine(StartWave());
     }
 
@@ -101,4 +124,14 @@ public class EnemySpawner : MonoBehaviour
     {
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
     }
+
+    private void UpdateWaveUI()
+    {
+        if (waveText != null)
+        {
+            waveText.text = "Wave: " + currentWave.ToString() + "/3";
+        }
+    }
+
+
 }

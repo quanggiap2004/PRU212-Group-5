@@ -13,6 +13,13 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     public int CurrentMoney { get; private set; }
     private int playerMoney = 0;
     public bool isAnyUIOpen { get; private set; } = false;
+
+    public TextMeshProUGUI MoneyText => throw new System.NotImplementedException();
+
+    public int PlayerHealth => throw new System.NotImplementedException();
+
+    public TextMeshProUGUI HealthText => throw new System.NotImplementedException();
+
     [SerializeField] public TextMeshProUGUI moneyText;
 
     [Header("Shop UI")]
@@ -84,5 +91,15 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     {
         if (moneyText != null)
             moneyText.text = CurrentMoney.ToString();
+    }
+
+    public void DecreaseHealth(int amount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateHealthUI()
+    {
+        throw new System.NotImplementedException();
     }
 }
