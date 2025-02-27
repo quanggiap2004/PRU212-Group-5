@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Tower
+  - name: Ground
     uniqueID: 2229614709
+    locked: 0
+  - name: Object Background
+    uniqueID: 1695890405
+    locked: 0
+  - name: Decorative Object
+    uniqueID: 2513181367
     locked: 0

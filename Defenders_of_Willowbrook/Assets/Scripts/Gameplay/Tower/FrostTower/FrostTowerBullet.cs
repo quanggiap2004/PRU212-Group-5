@@ -27,7 +27,7 @@ public class FrostTowerBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Collided with: " + other.gameObject.name);
+        //Debug.Log("Collided with: " + other.gameObject.name);
         other.gameObject.GetComponent<EnemyHealth>().TakeDamage(bulletDamage);
         Destroy(gameObject);
     }

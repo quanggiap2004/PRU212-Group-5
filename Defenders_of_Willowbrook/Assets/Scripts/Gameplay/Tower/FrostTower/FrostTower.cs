@@ -45,7 +45,7 @@ public class FrostTower : MonoBehaviour
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         FrostTowerBullet bulletScript = bulletObj.GetComponent<FrostTowerBullet>();
         bulletScript.SetTarget(target);
-        Debug.Log("Shoot");
+        //Debug.Log("Shoot");
     }
     private void FindTarget()
     {

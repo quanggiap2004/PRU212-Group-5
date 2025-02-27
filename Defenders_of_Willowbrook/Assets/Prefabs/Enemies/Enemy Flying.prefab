@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 868115029611658198}
   - component: {fileID: 3316573974657947371}
   - component: {fileID: 8553678499759355351}
-  - component: {fileID: 3587729729643514152}
-  - component: {fileID: 1796681868457743011}
+  - component: {fileID: 3762931642637590300}
+  - component: {fileID: 2962971902989852121}
   m_Layer: 0
   m_Name: Enemy Flying
   m_TagString: Untagged
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 1852403493, guid: 86aa10a5988ba8a4eaef426af4219f19, type: 3}
+  m_Sprite: {fileID: -1861990067, guid: 86aa10a5988ba8a4eaef426af4219f19, type: 3}
   m_Color: {r: 0.9882353, g: 1, b: 1, a: 0.5019608}
   m_FlipX: 0
   m_FlipY: 0
@@ -172,7 +172,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
---- !u!114 &3587729729643514152
+--- !u!114 &3762931642637590300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,12 +181,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 201410305804991984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd2ff97f31cebd429ddd243f4f4deec, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cab98d1b51678647ba281860860222a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3316573974657947371}
   moveSpeed: 2
---- !u!114 &1796681868457743011
+--- !u!114 &2962971902989852121
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -195,7 +195,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 201410305804991984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ce6ef3b176d9ba408225f9be77fa84d, type: 3}
+  m_Script: {fileID: 11500000, guid: cf5890828d6f23d4caf581a9bf3174bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 2

@@ -8,14 +8,36 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int hitPoints = 2;
     [SerializeField] private int moneyReward = 3;
     private bool isDestroyed = false;
-    
+    private ILevelManager levelManager;
+
+    private void Start()
+    {
+        var managers = FindObjectsOfType<MonoBehaviour>(); // Tìm t?t c? MonoBehaviour
+        foreach (var manager in managers)
+        {
+            if (manager is ILevelManager)
+            {
+                levelManager = (ILevelManager)manager;
+                break; // L?y cái ??u tiên tìm th?y
+            }
+        }
+
+        if (levelManager == null)
+        {
+            Debug.LogError("No Level Manager found!");
+        }
+        else
+        {
+            //Debug.Log("Level Manager found: " + levelManager.GetType().Name);
+        }
+    }
     public void TakeDamage(int dmg)
     {
         hitPoints -= dmg;
         if (hitPoints <= 0 && !isDestroyed)
         {
             EnemySpawner.onEnemyDestroy.Invoke();
-            Level1Manager.main.IncreaseMoney(moneyReward);
+            levelManager?.IncreaseMoney(moneyReward);
             isDestroyed = true;
             Destroy(gameObject);
         }

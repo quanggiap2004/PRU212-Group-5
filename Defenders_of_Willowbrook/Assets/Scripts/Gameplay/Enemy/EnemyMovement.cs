@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,10 +12,29 @@ public class EnemyMovement : MonoBehaviour
 
     private Transform target;
     private int pathIndex = 0;
+    private ILevelManager levelManager;
 
     private void Start()
     {
-        target = Level1Manager.main.path[pathIndex];
+        var managers = FindObjectsOfType<MonoBehaviour>(); // Tìm tất cả MonoBehaviour
+        foreach (var manager in managers)
+        {
+            if (manager is ILevelManager)
+            {
+                levelManager = (ILevelManager)manager;
+                break; // Lấy cái đầu tiên tìm thấy
+            }
+        }
+
+        if (levelManager == null)
+        {
+            Debug.LogError("No Level Manager found!");
+        }
+        else
+        {
+            //Debug.Log("Level Manager found: " + levelManager.GetType().Name);
+        }
+        target = levelManager.Path[pathIndex];
     }
 
     private void Update()
@@ -23,14 +42,14 @@ public class EnemyMovement : MonoBehaviour
         if(Vector2.Distance(target.position, transform.position) < 0.1f)
         {
             pathIndex++;
-            if (pathIndex == Level1Manager.main.path.Length)
+            if (pathIndex == levelManager.Path.Length)
             {
                 Destroy(gameObject);
                 EnemySpawner.onEnemyDestroy.Invoke();
                 return;
             } else
             {
-                target = Level1Manager.main.path[pathIndex];
+                target = levelManager.Path[pathIndex];
             }
         }
     }
