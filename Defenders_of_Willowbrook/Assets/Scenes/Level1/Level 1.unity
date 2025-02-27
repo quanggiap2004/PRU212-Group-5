@@ -8634,12 +8634,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towers:
-  - name: Frost Tower
-    cost: 17
-    prefab: {fileID: 5589257821234882793, guid: 424d73f666942fc45b3a13a37e427fca, type: 3}
-  - name: Basic Tower
-    cost: 12
-    prefab: {fileID: 2542642799759331748, guid: 4e4be1935846a8b47af365fd171df8d0, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1966465053
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+ 
 
 public class TowerPlot : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class TowerPlot : MonoBehaviour
             Debug.Log("Not enough money");
             return;
         }
-        Level1Manager.main.SpendMoney(towerTobuild.cost);
+        Level2Manager.main.SpendMoney(towerTobuild.cost);
 
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z); // Adjust the Y offset as needed
         tower = Instantiate(towerTobuild.prefab, spawnPosition, Quaternion.identity);
