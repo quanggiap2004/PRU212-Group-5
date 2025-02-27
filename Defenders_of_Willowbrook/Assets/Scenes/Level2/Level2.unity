@@ -4424,7 +4424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 201410305804991984, guid: 39d6f22279677dc4084309eff4f11a52, type: 3}
+  - {fileID: 4091842606761437279, guid: 27abdfe01aaadfd43a869f8dfb38dc85, type: 3}
   baseEnemies: 8
   enemiesPerSecond: 0.5
   timeBetweenWaves: 5
@@ -6901,7 +6901,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 283237897}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
         m_MethodName: SelectedTower
         m_Mode: 3
@@ -7422,7 +7422,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 283237897}
         m_TargetAssemblyTypeName: BuildManager, Assembly-CSharp
         m_MethodName: SelectedTower
         m_Mode: 3
