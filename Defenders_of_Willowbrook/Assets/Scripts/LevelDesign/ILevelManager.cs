@@ -12,4 +12,5 @@ public interface ILevelManager
     int CurrentMoney { get; }
     void SetUIState(bool state);
     bool isAnyUIOpen { get; }
+
 }
