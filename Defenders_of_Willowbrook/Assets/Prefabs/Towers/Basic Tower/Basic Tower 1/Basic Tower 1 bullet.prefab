@@ -164,3 +164,4 @@ MonoBehaviour:
   rb: {fileID: 2544004202173718257}
   bulletSpeed: 5
   bulletDamage: 1
+  target: {fileID: 0}
