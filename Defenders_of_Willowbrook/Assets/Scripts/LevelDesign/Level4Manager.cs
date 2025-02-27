@@ -33,23 +33,36 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     public void Start()
     {
         Debug.Log("Level4Manager Started");
-        CurrentMoney = 1000;
+        CurrentMoney = 100;
         moneyText.text = CurrentMoney.ToString();
 
         towerShop.CloseMenu();
-        // Bắt đầu câu hỏi trước khi mở Shop
+
         if (QuizManager.instance != null)
         {
             Debug.Log("QuizManager instance found!");
-            QuizManager.instance.OnQuizComplete.AddListener(StartGameFlow);
+            QuizManager.instance.OnQuizComplete += OnQuizFinished;
             QuizManager.instance.StartQuiz(this);
-            Debug.Log("Quiz Started");
         }
         else
         {
             Debug.LogError("QuizManager instance is NULL!");
         }
     }
+    private void OnQuizFinished(bool isSuccess)
+    {
+        if (isSuccess)
+        {
+            Debug.Log("Quiz passed! Buff applied.");
+        }
+        else
+        {
+            Debug.Log("Quiz failed! Debuff applied.");
+        }
+
+        towerShop.ToggleMenu();
+    }
+
 
     private void StartGameFlow()
     {

@@ -12,13 +12,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Start()
     {
-        var managers = FindObjectsOfType<MonoBehaviour>(); // Tìm t?t c? MonoBehaviour
+        var managers = FindObjectsOfType<MonoBehaviour>(); 
         foreach (var manager in managers)
         {
             if (manager is ILevelManager)
             {
                 levelManager = (ILevelManager)manager;
-                break; // L?y cái ??u tiên tìm th?y
+                break;
             }
         }
 
@@ -36,7 +36,10 @@ public class EnemyHealth : MonoBehaviour
         hitPoints -= dmg;
         if (hitPoints <= 0 && !isDestroyed)
         {
-            EnemySpawner.onEnemyDestroy.Invoke();
+            if (EnemySpawner.onEnemyDestroy != null)
+            {
+                EnemySpawner.onEnemyDestroy.Invoke();
+            }
             levelManager?.IncreaseMoney(moneyReward);
             isDestroyed = true;
             Destroy(gameObject);
