@@ -11,7 +11,6 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     public Transform[] path;
     public Transform[] Path => path;
     public int CurrentMoney { get; private set; }
-    private int playerMoney = 0;
     public bool isAnyUIOpen { get; private set; } = false;
 
     [SerializeField] public TextMeshProUGUI moneyText;
@@ -37,8 +36,9 @@ public class Level1Manager : MonoBehaviour, ILevelManager
 
     public void IncreaseMoney(int amount)
     {
-        playerMoney += amount;
-        Debug.Log("Money: " + playerMoney);
+        CurrentMoney += amount;
+        UpdateMoneyUI();
+        Debug.Log("Money: " + CurrentMoney);
     }
 
     public bool SpendMoney(int amount)
