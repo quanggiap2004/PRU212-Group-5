@@ -13,6 +13,13 @@ public class Level5Manager : MonoBehaviour, ILevelManager
     public int CurrentMoney { get; private set; }
     private int playerMoney = 0;
     public bool isAnyUIOpen { get; private set; } = false;
+
+    public TextMeshProUGUI MoneyText => throw new System.NotImplementedException();
+
+    public int PlayerHealth => throw new System.NotImplementedException();
+
+    public TextMeshProUGUI HealthText => throw new System.NotImplementedException();
+
     [SerializeField] public TextMeshProUGUI moneyText;
     private void Awake()
     {
@@ -59,5 +66,15 @@ public class Level5Manager : MonoBehaviour, ILevelManager
     public void PauseGame(bool isPaused)
     {
         Time.timeScale = isPaused ? 0f : 1f;
+    }
+
+    public void DecreaseHealth(int amount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void UpdateHealthUI()
+    {
+        throw new System.NotImplementedException();
     }
 }
