@@ -18,6 +18,7 @@ public class BuildManager : MonoBehaviour
 
     public Tower GetSelectedTower()
     {
+        Debug.Log(towers[0].prefab);
         return towers[selectedTower];
     }
 

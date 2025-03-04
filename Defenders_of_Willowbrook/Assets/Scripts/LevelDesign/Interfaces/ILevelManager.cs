@@ -18,4 +18,7 @@ public interface ILevelManager
     TextMeshProUGUI MoneyText { get; }
     int PlayerHealth { get; } 
     TextMeshProUGUI HealthText { get; }
+
+    void GameOver();
+    void LevelComplete();
 }

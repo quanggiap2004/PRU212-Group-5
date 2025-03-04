@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level1Manager : MonoBehaviour, ILevelManager
 {
@@ -29,7 +30,7 @@ public class Level1Manager : MonoBehaviour, ILevelManager
 
     public void Start()
     {
-        CurrentMoney = 100;
+        CurrentMoney = 1000;
         moneyText.text = CurrentMoney.ToString();
         healthText.text = playerHealth.ToString();
     }
@@ -38,7 +39,6 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     {
         CurrentMoney += amount;
         UpdateMoneyUI();
-        Debug.Log("Money: " + CurrentMoney);
     }
 
     public bool SpendMoney(int amount)
@@ -52,7 +52,6 @@ public class Level1Manager : MonoBehaviour, ILevelManager
         }
         else
         {
-            Debug.Log("Not enough money");
             return false;
         }
     }
@@ -88,5 +87,17 @@ public class Level1Manager : MonoBehaviour, ILevelManager
     {
         if (healthText != null)
             healthText.text = playerHealth.ToString();
+    }
+
+    public void GameOver()
+    {
+        // Redirect to the level list scene
+        SceneManager.LoadScene("LevelList");
+    }
+
+    public void LevelComplete()
+    {
+        // Redirect to the next level scene
+        SceneManager.LoadScene("Level2");
     }
 }

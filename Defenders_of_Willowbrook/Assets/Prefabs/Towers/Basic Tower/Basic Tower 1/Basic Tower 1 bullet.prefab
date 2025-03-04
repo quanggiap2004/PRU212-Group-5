@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5307618783698547349}
   - component: {fileID: 6378505229619761515}
   - component: {fileID: 2544004202173718257}
-  - component: {fileID: 3015852379391510491}
+  - component: {fileID: 8355175704885167354}
   m_Layer: 8
   m_Name: Basic Tower 1 bullet
   m_TagString: Untagged
@@ -149,7 +149,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &3015852379391510491
+--- !u!114 &8355175704885167354
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,10 +158,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1155779734063314631}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ed37b5f9ad87e64c8299eeaad3ed719, type: 3}
+  m_Script: {fileID: 11500000, guid: cbc626d5f2811a1438bc800fc3dcad65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2544004202173718257}
   bulletSpeed: 5
   bulletDamage: 1
-  target: {fileID: 0}

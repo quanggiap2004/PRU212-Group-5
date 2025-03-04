@@ -10,7 +10,14 @@ public class FrostTowerBullet : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
-    [SerializeField] private Transform target;
+    [SerializeField] private float freezeTime = 1f;
+    [SerializeField] private Color freezeColor = new Color(0.38f, 0.69f, 0.91f);
+    private Transform target;
+
+    private void Start()
+    {
+
+    }
 
     public void SetTarget(Transform _target)
     {
@@ -22,12 +29,17 @@ public class FrostTowerBullet : MonoBehaviour
         if (!target) return;
         Vector2 direction = (target.position - transform.position).normalized;
         rb.velocity = direction * bulletSpeed;
+
     }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         //Debug.Log("Collided with: " + other.gameObject.name);
-        other.gameObject.GetComponent<EnemyHealth>().TakeDamage(bulletDamage);
+        EnemyHealth eh = other.gameObject.GetComponent<EnemyHealth>();
+        if (eh != null)
+        {
+            eh.TakeDamage(bulletDamage, freezeTime, freezeColor); // Deal damage and apply freeze effect
+        }
         Destroy(gameObject);
     }
 }

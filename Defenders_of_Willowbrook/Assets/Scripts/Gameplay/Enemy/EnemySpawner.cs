@@ -70,7 +70,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (levelManager.PlayerHealth == 0)
         {
-            RedirectToScene(1);
+            levelManager.GameOver();
         }
 
         if (enemiesLeftToSpawn == 0 && enemiesAlive == 0)
@@ -91,10 +91,6 @@ public class EnemySpawner : MonoBehaviour
         enemiesLeftToSpawn = EnemiesPerWave();
     }
 
-    private void RedirectToScene(int sceneIndex)
-    {
-        SceneManager.LoadScene(sceneIndex);
-    }
     private void EndWave()
     {
         isSpawning = false;
@@ -103,7 +99,7 @@ public class EnemySpawner : MonoBehaviour
         
         if (currentWave > 3)
         {
-            RedirectToScene(0);
+            levelManager.LevelComplete();
             return;
         }
         UpdateWaveUI();

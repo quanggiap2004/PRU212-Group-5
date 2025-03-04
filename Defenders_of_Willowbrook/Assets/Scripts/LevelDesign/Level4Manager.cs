@@ -33,36 +33,23 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     public void Start()
     {
         Debug.Log("Level4Manager Started");
-        CurrentMoney = 100;
+        CurrentMoney = 1000;
         moneyText.text = CurrentMoney.ToString();
 
         towerShop.CloseMenu();
-
+        // Bắt đầu câu hỏi trước khi mở Shop
         if (QuizManager.instance != null)
         {
             Debug.Log("QuizManager instance found!");
-            QuizManager.instance.OnQuizComplete += OnQuizFinished;
+            QuizManager.instance.OnQuizComplete.AddListener(StartGameFlow);
             QuizManager.instance.StartQuiz(this);
+            Debug.Log("Quiz Started");
         }
         else
         {
             Debug.LogError("QuizManager instance is NULL!");
         }
     }
-    private void OnQuizFinished(bool isSuccess)
-    {
-        if (isSuccess)
-        {
-            Debug.Log("Quiz passed! Buff applied.");
-        }
-        else
-        {
-            Debug.Log("Quiz failed! Debuff applied.");
-        }
-
-        towerShop.ToggleMenu();
-    }
-
 
     private void StartGameFlow()
     {
@@ -112,6 +99,16 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     }
 
     public void UpdateHealthUI()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void GameOver()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void LevelComplete()
     {
         throw new System.NotImplementedException();
     }

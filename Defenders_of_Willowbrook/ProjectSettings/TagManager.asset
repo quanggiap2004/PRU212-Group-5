@@ -50,3 +50,6 @@ TagManager:
   - name: Decorative Object
     uniqueID: 2513181367
     locked: 0
+  - name: UI
+    uniqueID: 670764599
+    locked: 0

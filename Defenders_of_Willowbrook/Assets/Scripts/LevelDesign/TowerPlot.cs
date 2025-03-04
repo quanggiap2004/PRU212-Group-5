@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets.Scripts.Gameplay.Tower.Interfaces;
 using UnityEngine;
 
 public class TowerPlot : MonoBehaviour
@@ -8,7 +7,8 @@ public class TowerPlot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
 
-    private GameObject tower;
+    private GameObject towerObj;
+    public ITower tower;
     private Color startColor;
     private ILevelManager levelManager;
 
@@ -48,8 +48,18 @@ public class TowerPlot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (tower != null) return;
-
+        Debug.Log("Mouse Down");
+        if (UpgradeAndSoldUIManager.main.IsHovering())
+        {
+            Debug.Log("Is Hovering");
+            return;
+        }
+        if (towerObj != null)
+        {
+            Debug.Log("opennn");
+            tower.OpenUpgradeUI();
+            return;
+        }
         Tower towerTobuild = BuildManager.main.GetSelectedTower();
         if (towerTobuild.cost > levelManager.CurrentMoney)
         {
@@ -59,6 +69,15 @@ public class TowerPlot : MonoBehaviour
         levelManager.SpendMoney(towerTobuild.cost);
 
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-        tower = Instantiate(towerTobuild.prefab, spawnPosition, Quaternion.identity);
+        towerObj = Instantiate(towerTobuild.prefab, spawnPosition, Quaternion.identity);
+        tower = towerObj.GetComponent<ITower>();
+        tower.SetTowerPlot(this);
+    }
+
+    public void SetTower(GameObject newTowerObj)
+    {
+        towerObj = newTowerObj;
+        tower = newTowerObj.GetComponent<ITower>();
+        tower.SetTowerPlot(this);
     }
 }
