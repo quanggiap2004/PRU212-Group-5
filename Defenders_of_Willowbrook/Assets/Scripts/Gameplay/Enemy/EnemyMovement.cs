@@ -45,8 +45,9 @@ public class EnemyMovement : MonoBehaviour
             pathIndex++;
             if (pathIndex == levelManager.Path.Length)
             {
-                Level1Manager.main.DecreaseHealth(1);
-                Destroy(gameObject);
+                levelManager.DecreaseHealth(1);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
                 EnemySpawner.onEnemyDestroy.Invoke();
                 return;
             } else

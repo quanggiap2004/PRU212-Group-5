@@ -16,12 +16,18 @@ public class FrostTowerBullet : MonoBehaviour
 
     private void Start()
     {
-
+        // Destroy the bullet after 10 seconds
+        Destroy(gameObject, 10f);
     }
 
     public void SetTarget(Transform _target)
     {
         target = _target;
+    }
+
+    private void Update()
+    {
+        RotateTowardTarget();
     }
 
     private void FixedUpdate()
@@ -40,6 +46,24 @@ public class FrostTowerBullet : MonoBehaviour
         {
             eh.TakeDamage(bulletDamage, freezeTime, freezeColor); // Deal damage and apply freeze effect
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
+
+    private void RotateTowardTarget()
+    {
+        if(!target)
+        {
+            return;
+        }
+
+        // Calculate the direction
+        Vector3 direction = target.position - transform.position;
+
+        // Get the angle (convert from radians to degrees)
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Apply rotation (adjusting Z-axis only)
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90);
+    }    
 }

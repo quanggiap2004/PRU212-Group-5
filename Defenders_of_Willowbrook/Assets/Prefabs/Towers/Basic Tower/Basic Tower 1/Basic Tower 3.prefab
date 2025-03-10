@@ -94,7 +94,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6431887648613979449}
-  - component: {fileID: 5456859943832207575}
   - component: {fileID: 549987222486536009}
   m_Layer: 0
   m_Name: Basic Tower 3
@@ -121,39 +120,6 @@ Transform:
   - {fileID: 4036914066822800469}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5456859943832207575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2542642799759331748}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15adf2dd1092f0548a2969f776798255, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponRotation: {fileID: 3670413738654046842}
-  enemyMask:
-    serializedVersion: 2
-    m_Bits: 128
-  bulletPrefab: {fileID: 1155779734063314631, guid: ab81d15a1368b2c408152c3df862f455, type: 3}
-  firingPoint: {fileID: 1591633034056848898}
-  upgradeUI: {fileID: 4400517022796069892}
-  upgradeButton: {fileID: 2960961316905390188}
-  sellButton: {fileID: 7292791235635229436}
-  upgradeCostText: {fileID: 2312094164330902888}
-  sellCostText: {fileID: 7806938796793429782}
-  upgradedPrefab: []
-  targetingRange: 3
-  rotationSpeed: 200
-  fireRate: 1
-  baseUpgradeCost: 20
-  timeUntilFire: 0
-  fireRateBase: 0
-  targetingRangeBase: 0
-  level: 1
-  towerPlot: {fileID: 0}
 --- !u!114 &549987222486536009
 MonoBehaviour:
   m_ObjectHideFlags: 0

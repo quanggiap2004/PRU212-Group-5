@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Level2Manager : MonoBehaviour, ILevelManager
 {
@@ -89,11 +90,11 @@ public class Level2Manager : MonoBehaviour, ILevelManager
 
     public void GameOver()
     {
-        throw new System.NotImplementedException();
+        SceneManager.LoadScene("LevelList");
     }
 
     public void LevelComplete()
     {
-        throw new System.NotImplementedException();
+        SceneManager.LoadScene("Level2");
     }
 }

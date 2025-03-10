@@ -1,3 +1,5 @@
+using Assets.Scripts.Gameplay;
+using Assets.Scripts.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +11,10 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private GameObject bossPrefab;
+
     private ILevelManager levelManager;
+    private Level5Manager level5Manager;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
@@ -28,6 +33,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesAlive;
     private int enemiesLeftToSpawn;
     private bool isSpawning = false;
+    private bool bossSpawned = false;
 
     private void Awake()
     {
@@ -42,7 +48,11 @@ public class EnemySpawner : MonoBehaviour
             if (manager is ILevelManager)
             {
                 levelManager = (ILevelManager)manager;
-                break;
+            }
+
+            if (manager is Level5Manager)
+            {
+                level5Manager = (Level5Manager)manager;
             }
         }
 
@@ -50,17 +60,22 @@ public class EnemySpawner : MonoBehaviour
         {
             Debug.LogError("No Level Manager found!");
         }
+
+        if (level5Manager == null)
+        {
+            //Debug.LogError("No Level 5 Manager found!");
+        }
+
         UpdateWaveUI();
         StartCoroutine(StartWave());
-        // Ch? quiz hoàn t?t tr??c khi b?t ??u spawn
-        //QuizManager.instance.OnQuizComplete.AddListener(() => StartCoroutine(StartWave()));
     }
 
     private void Update()
     {
         if (!isSpawning) return;
         timeSinceLastSpawn += Time.deltaTime;
-        if (timeSinceLastSpawn >= (1f / enemiesPerSecond) && enemiesLeftToSpawn > 0 )
+
+        if (timeSinceLastSpawn >= (1f / enemiesPerSecond) && enemiesLeftToSpawn > 0)
         {
             SpawnEnemy();
             enemiesLeftToSpawn--;
@@ -70,7 +85,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (levelManager.PlayerHealth == 0)
         {
-            levelManager.GameOver();
+            return;
         }
 
         if (enemiesLeftToSpawn == 0 && enemiesAlive == 0)
@@ -81,14 +96,77 @@ public class EnemySpawner : MonoBehaviour
 
     private void EnemyDestroyed()
     {
-        enemiesAlive--;
+        if (bossSpawned)
+        {
+            BossHealth boss = FindObjectOfType<BossHealth>();
+
+            if (boss != null && boss.GetCurrentHealth() > 0)
+            {
+                Debug.Log("Boss is still alive! Game Over.");
+                level5Manager?.TriggerGameOver(); 
+                return; 
+            }
+        }
+
+        enemiesAlive--; 
+
+        if (bossSpawned && enemiesAlive == 0)
+        {
+            Debug.Log("Boss Defeated! Triggering Game Win.");
+            if (level5Manager != null)
+            {
+                level5Manager.CheckGameWinCondition();
+            }
+            else
+            {
+                Debug.LogError("No Level 5 Manager to trigger game win!");
+            }
+        }
     }
 
     private IEnumerator StartWave()
     {
         yield return new WaitForSeconds(timeBetweenWaves);
-        isSpawning = true;
-        enemiesLeftToSpawn = EnemiesPerWave();
+
+        if (currentWave <= 3)
+        {
+            isSpawning = true;
+            enemiesLeftToSpawn = EnemiesPerWave();
+        }
+        else
+        {
+            SpawnBoss();
+        }
+    }
+
+    private void SpawnBoss()
+    {
+        isSpawning = false; // Stop normal enemy spawning
+        enemiesLeftToSpawn = 0; // No more regular enemies
+        bossSpawned = true; // Track that the boss has appeared
+
+        if (bossPrefab == null)
+        {
+            Debug.LogWarning("No boss prefab assigned. Ending game.");
+            level5Manager?.CheckGameWinCondition();
+            return;
+        }
+
+        if (levelManager != null)
+        {
+            GameObject boss = Instantiate(bossPrefab, levelManager.SpawnPoint.position, Quaternion.identity);
+            BossHealth bossHealth = boss.GetComponent<BossHealth>();
+
+            if (bossHealth != null)
+            {
+                enemiesAlive++;
+                Debug.Log("Boss spawned! Waiting for defeat...");
+            }
+            else
+            {
+                Debug.LogWarning("Boss prefab missing BossHealth component!");
+            }
+        }
     }
 
     private void EndWave()
@@ -96,15 +174,25 @@ public class EnemySpawner : MonoBehaviour
         isSpawning = false;
         timeSinceLastSpawn = 0f;
         currentWave++;
-        
-        if (currentWave > 3)
+
+        if (currentWave > 3) // After 3 waves, boss should be defeated
         {
-            levelManager.LevelComplete();
+            if (bossSpawned && enemiesAlive > 0) // If boss is alive, trigger Game Over
+            {
+                Debug.Log("Boss is still alive after last wave! Game Over.");
+                level5Manager?.TriggerGameOver();
+            }
+            else
+            {
+                SpawnBoss();
+            }
             return;
         }
+
         UpdateWaveUI();
         StartCoroutine(StartWave());
     }
+
 
     private void SpawnEnemy()
     {
@@ -128,6 +216,4 @@ public class EnemySpawner : MonoBehaviour
             waveText.text = "Wave: " + currentWave.ToString() + "/3";
         }
     }
-
-
 }

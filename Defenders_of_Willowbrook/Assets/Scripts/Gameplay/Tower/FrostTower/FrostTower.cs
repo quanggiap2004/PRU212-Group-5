@@ -32,6 +32,7 @@ public class FrostTower : MonoBehaviour, ITower
     public float targetingRangeBase;
     public int level = 1;
     public TowerPlot towerPlot;
+    protected ILevelManager levelManager;
     protected virtual void Start()
     {
         fireRateBase = fireRate;
@@ -40,6 +41,21 @@ public class FrostTower : MonoBehaviour, ITower
         sellCostText.text = (baseUpgradeCost / 2).ToString();
         upgradeButton.onClick.AddListener(Upgrade);
         sellButton.onClick.AddListener(SellTower);
+
+        var managers = FindObjectsOfType<MonoBehaviour>();
+        foreach (var manager in managers)
+        {
+            if (manager is ILevelManager)
+            {
+                levelManager = (ILevelManager)manager;
+                break;
+            }
+        }
+
+        if (levelManager == null)
+        {
+            Debug.LogError("No Level Manager found!");
+        }
     }
     protected virtual void Update()
     {
@@ -108,11 +124,11 @@ public class FrostTower : MonoBehaviour, ITower
 
     protected virtual void Upgrade()
     {
-        if(baseUpgradeCost > Level1Manager.main.CurrentMoney)
+        if(baseUpgradeCost > levelManager.CurrentMoney)
         {
             return;
         }
-        Level1Manager.main.SpendMoney(baseUpgradeCost);
+        levelManager.SpendMoney(baseUpgradeCost);
         level++;
         fireRate = CalculateFireRate();
         targetingRange = CalculateTargetingRange();
@@ -122,6 +138,8 @@ public class FrostTower : MonoBehaviour, ITower
         sellCostText.text = (baseUpgradeCost / 2).ToString();
         if(level == 2)
         {
+            Debug.Log("Upgrade at Upgrade");
+            Debug.Log("Tower plot" + towerPlot);
             UpgradeAppearance(0);
         } else if (level == 3)
         {
@@ -150,7 +168,7 @@ public class FrostTower : MonoBehaviour, ITower
 
     protected virtual void SellTower()
     {
-        Level1Manager.main.IncreaseMoney(baseUpgradeCost/2);
+        levelManager.IncreaseMoney(baseUpgradeCost/2);
         UpgradeAndSoldUIManager.main.SetHoveringState(false);
         Destroy(gameObject);
     }
@@ -164,11 +182,14 @@ public class FrostTower : MonoBehaviour, ITower
         upgradedTower.GetComponent<FrostTower>().baseUpgradeCost = this.baseUpgradeCost;
         towerPlot.SetTower(upgradedTower);
         
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
     public virtual void SetTowerPlot(TowerPlot plot)
     {
         towerPlot = plot;
+
+        Debug.Log("Tower plot frost" + towerPlot);
     }
 }

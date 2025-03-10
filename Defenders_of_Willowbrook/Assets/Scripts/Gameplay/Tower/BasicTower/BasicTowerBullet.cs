@@ -13,6 +13,11 @@ public class BasicTowerBullet : MonoBehaviour
 
     private Transform target;
 
+    private void Start()
+    {
+        // Destroy the bullet after 10 seconds
+        Destroy(gameObject, 10f);
+    }
     public void SetTarget(Transform _target)
     {
         target = _target;

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Gameplay.Tower.Interfaces;
+﻿using Assets.Scripts.Gameplay.Tower.BasicTower;
+using Assets.Scripts.Gameplay.Tower.Interfaces;
 using UnityEngine;
 
 public class TowerPlot : MonoBehaviour
@@ -70,14 +71,27 @@ public class TowerPlot : MonoBehaviour
 
         Vector3 spawnPosition = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
         towerObj = Instantiate(towerTobuild.prefab, spawnPosition, Quaternion.identity);
+
+ 
+
         tower = towerObj.GetComponent<ITower>();
         tower.SetTowerPlot(this);
+        //if (tower is BasicTower basicTower)
+        //{
+        //    basicTower.SetTowerPlot(this);
+        //    Debug.Log("hahahahhahaah1");
+        //} else if(tower is FrostTower frostTower)
+        //{
+        //    Debug.Log("hahahahhahaah2");
+        //    frostTower.SetTowerPlot(this);
+        //}
     }
 
     public void SetTower(GameObject newTowerObj)
     {
         towerObj = newTowerObj;
         tower = newTowerObj.GetComponent<ITower>();
+
         tower.SetTowerPlot(this);
     }
 }

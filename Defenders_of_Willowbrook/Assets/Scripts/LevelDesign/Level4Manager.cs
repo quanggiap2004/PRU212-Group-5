@@ -11,16 +11,16 @@ public class Level4Manager : MonoBehaviour, ILevelManager
     public Transform[] path;
     public Transform[] Path => path;
     public int CurrentMoney { get; private set; }
-    private int playerMoney = 0;
     public bool isAnyUIOpen { get; private set; } = false;
 
-    public TextMeshProUGUI MoneyText => throw new System.NotImplementedException();
-
-    public int PlayerHealth => throw new System.NotImplementedException();
-
-    public TextMeshProUGUI HealthText => throw new System.NotImplementedException();
-
     [SerializeField] public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI MoneyText => moneyText;
+
+    [Header("Player Health")]
+    [SerializeField] private int playerHealth = 10;
+    public int PlayerHealth => playerHealth;
+    [SerializeField] private TextMeshProUGUI healthText;
+    public TextMeshProUGUI HealthText => healthText;
 
     [Header("Shop UI")]
     [SerializeField] private TowerShop towerShop;
@@ -68,7 +68,7 @@ public class Level4Manager : MonoBehaviour, ILevelManager
 
     public void IncreaseMoney(int amount)
     {
-        playerMoney += amount;
+        CurrentMoney += amount;
         UpdateMoneyUI();
     }
 
@@ -95,12 +95,20 @@ public class Level4Manager : MonoBehaviour, ILevelManager
 
     public void DecreaseHealth(int amount)
     {
-        throw new System.NotImplementedException();
+        playerHealth -= amount;
+        if (playerHealth <= 0)
+        {
+            playerHealth = 0;
+            // Handle game over logic here
+            Debug.Log("Game Over!");
+        }
+        UpdateHealthUI();
     }
 
     public void UpdateHealthUI()
     {
-        throw new System.NotImplementedException();
+        if (healthText != null)
+            healthText.text = playerHealth.ToString();
     }
 
     public void GameOver()

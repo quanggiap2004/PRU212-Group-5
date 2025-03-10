@@ -25,7 +25,8 @@ public class EnemyMovement2 : MonoBehaviour
             pathIndex++;
             if (pathIndex == Level2Manager.main.path.Length)
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
                 EnemySpawner2.onEnemyDestroy.Invoke();
                 return;
             } else

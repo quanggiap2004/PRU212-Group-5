@@ -59,58 +59,58 @@
 
 
 
-using Firebase;
-using Firebase.Database;
-using Firebase.Extensions;
-using UnityEngine;
-using System.Collections.Generic;
+//using Firebase;
+//using Firebase.Database;
+//using Firebase.Extensions;
+//using UnityEngine;
+//using System.Collections.Generic;
 
-public class FirebaseDatabaseMananger : MonoBehaviour
-{
-    private DatabaseReference reference;
+//public class FirebaseDatabaseMananger : MonoBehaviour
+//{
+//    private DatabaseReference reference;
 
-    private void Awake()
-    {
-        FirebaseApp app = FirebaseApp.DefaultInstance;
-        reference = FirebaseDatabase.DefaultInstance.RootReference;
-    }
+//    private void Awake()
+//    {
+//        FirebaseApp app = FirebaseApp.DefaultInstance;
+//        reference = FirebaseDatabase.DefaultInstance.RootReference;
+//    }
 
-    public void WriteDatabase(string path, Dictionary<string, object> data)
-    {
-        reference.Child(path).UpdateChildrenAsync(data).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompleted)
-            {
-                Debug.Log($"Data saved successfully at {path}");
-            }
-            else
-            {
-                Debug.LogError($"Failed to save data at {path}: {task.Exception}");
-            }
-        });
-    }
+//    public void WriteDatabase(string path, Dictionary<string, object> data)
+//    {
+//        reference.Child(path).UpdateChildrenAsync(data).ContinueWithOnMainThread(task =>
+//        {
+//            if (task.IsCompleted)
+//            {
+//                Debug.Log($"Data saved successfully at {path}");
+//            }
+//            else
+//            {
+//                Debug.LogError($"Failed to save data at {path}: {task.Exception}");
+//            }
+//        });
+//    }
 
-    public void ReadDatabase(string path, System.Action<Dictionary<string, object>> onComplete)
-    {
-        reference.Child(path).GetValueAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCompleted && task.Result.Exists)
-            {
-                Dictionary<string, object> data = new Dictionary<string, object>();
-                foreach (var child in task.Result.Children)
-                {
-                    data[child.Key] = child.Value;
-                }
-                onComplete?.Invoke(data);
-            }
-            else
-            {
-                Debug.Log($"No data found at {path}");
-                onComplete?.Invoke(null);
-            }
-        });
-    }
-}
+//    public void ReadDatabase(string path, System.Action<Dictionary<string, object>> onComplete)
+//    {
+//        reference.Child(path).GetValueAsync().ContinueWithOnMainThread(task =>
+//        {
+//            if (task.IsCompleted && task.Result.Exists)
+//            {
+//                Dictionary<string, object> data = new Dictionary<string, object>();
+//                foreach (var child in task.Result.Children)
+//                {
+//                    data[child.Key] = child.Value;
+//                }
+//                onComplete?.Invoke(data);
+//            }
+//            else
+//            {
+//                Debug.Log($"No data found at {path}");
+//                onComplete?.Invoke(null);
+//            }
+//        });
+//    }
+//}
 
 
 
