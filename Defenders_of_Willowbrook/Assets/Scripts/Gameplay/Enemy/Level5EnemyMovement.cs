@@ -11,70 +11,101 @@ namespace Assets.Scripts.Gameplay.Enemy
     {
         [Header("References")]
         [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private Animator animator;
+
+        [Header("Attributes")]
+        [SerializeField] private float moveSpeed = 2f;
+
         private Transform target;
+        private int pathIndex = 0;
         private ILevelManager levelManager;
+        private float baseSpeed;
 
-        public Transform[] waypoints; 
-        public float speed = 5f; 
-        private int currentWaypointIndex = 0; 
-        private Animator animator; 
-
-        void Start()
+        private void Start()
         {
-            animator = GetComponent<Animator>(); 
-        }
-
-        void Update()
-        {
-            MoveEnemy(); 
-        }
-
-        void MoveEnemy()
-        {
-            if (currentWaypointIndex < waypoints.Length)
+            baseSpeed = moveSpeed;
+            var managers = FindObjectsOfType<MonoBehaviour>(); // Tìm tất cả MonoBehaviour
+            foreach (var manager in managers)
             {
-                Vector2 targetPosition = waypoints[currentWaypointIndex].position;
-                transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-                if ((Vector2)transform.position == targetPosition)
+                if (manager is ILevelManager)
                 {
-                    currentWaypointIndex++; 
-                    UpdateDirection(); 
+                    levelManager = (ILevelManager)manager;
+                    break; // Lấy cái đầu tiên tìm thấy
+                }
+            }
+
+            if (levelManager == null)
+            {
+                Debug.LogError("No Level Manager found!");
+            }
+            else
+            {
+                //Debug.Log("Level Manager found: " + levelManager.GetType().Name);
+            }
+
+            target = levelManager.Path[pathIndex];
+        }
+
+        private void Update()
+        {
+            MoveEnemy();
+        }
+
+        private void MoveEnemy()
+        {
+            if (pathIndex < levelManager.Path.Length)
+            {
+                Vector2 targetPosition = levelManager.Path[pathIndex].position;
+                transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+                if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
+                {
+                    pathIndex++;
+
+                    if (pathIndex == levelManager.Path.Length)
+                    {
+                        Level5Manager.main.DecreaseHealth(1);
+                        Destroy(gameObject);
+                        EnemySpawner.onEnemyDestroy.Invoke();
+                        return;
+                    }
+                    else
+                    {
+                        target = levelManager.Path[pathIndex];
+                        UpdateDirection();
+                    }
                 }
             }
         }
 
-       
-
-        void UpdateDirection()
+        private void UpdateDirection()
         {
-            if (currentWaypointIndex < waypoints.Length)
+            if (pathIndex < levelManager.Path.Length)
             {
-                Vector2 direction = (waypoints[currentWaypointIndex].position - transform.position).normalized;
+                Vector2 direction = (levelManager.Path[pathIndex].position - transform.position).normalized;
 
                 if (direction.x > 0)
                 {
-                    animator.SetBool("IsMovingFront", false); 
+                    animator.SetBool("IsMovingFront", false);
                     animator.SetBool("IsMovingRight", true);
                 }
-                else if (direction.y < 0)  
+                else if (direction.y < 0)
                 {
-                    animator.SetBool("IsMovingRight", false); 
-                    animator.SetBool("IsMovingFront", true);  
+                    animator.SetBool("IsMovingRight", false);
+                    animator.SetBool("IsMovingFront", true);
                 }
             }
         }
 
-        public void Die()
+        public void UpdateSpeed(float newSpeed)
         {
-            if (animator.GetBool("IsMovingFront"))
-            {
-                animator.SetTrigger("FrontDeath");
-            }
-            else if (animator.GetBool("IsMovingRight"))
-            {
-                animator.SetTrigger("RightDeath");
-            }
+            moveSpeed = newSpeed;
+        }
+
+        public void ResetSpeed()
+        {
+            moveSpeed = baseSpeed;
         }
     }
+
 }
